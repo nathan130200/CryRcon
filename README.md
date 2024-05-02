@@ -10,4 +10,8 @@ Connect to remote cryengine dedicated server using crytek rcon api.
 
 <img src="https://i.imgur.com/jhJybQJ.png" alt="Cry Rcon working with some cryengine server">
 
-> By default cryengine dedicated server don't trim color codes $[0-9] so i decided to implement a basic parser for colorized output in rcon client.
+
+#### Notes
+
+- By default cryengine dedicated server don't trim color codes $[0-9] so i decided to implement a basic parser for colorized output in rcon client.
+- Rcon client uses TCP while game server uses UDP. You can share the same port in rcon client and the game while testing your server/network code (not recommended).
