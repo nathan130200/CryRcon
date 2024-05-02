@@ -1,5 +1,39 @@
 ﻿#pragma warning disable
 
+/* Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/* This software is Public Domain software and may be freely copied,
+ * modified, or distributed.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHORS 'AS IS' AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHORS OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+ * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+ * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
+ * ---------------------------------------------------------------------
+ * 
+ * For countries that do not provide for Public Domain this class is 
+ * dual licensed under the Apache License at the top of this file.
+ */
+
 namespace System.Security.Cryptography;
 
 using u64 = System.UInt64;
@@ -8,6 +42,67 @@ using u8 = System.Byte;
 
 ///<summary>
 /// The Whirlpool hashing function.
+///
+/// References
+///
+/// The Whirlpool algorithm was developed by Paulo S. L. M. Barreto and Vincent Rijmen.
+///
+/// See
+///      P.S.L.M. Barreto, V. Rijmen,
+///      ``The Whirlpool hashing function,''
+///      NESSIE submission, 2000 (tweaked version, 2001),
+///      https://www.cosic.esat.kuleuven.ac.be/nessie/workshop/submissions/whirlpool.zip
+/// 
+/// @author  Paulo S.L.M. Barreto
+/// @author  Vincent Rijmen.
+///
+///
+/// =============================================================================
+///
+/// .Net Coversion on May 2010 by Roger O Knapp http://csharptest.net
+/// Performance considerations: coult be improved by moving to unmanaged/unsafe
+/// implementations, currently SHA512 is about 10% faster.
+/// The code remains, as much as was possible, exactly as it appears in the
+/// example 'c' implementation available from the documentation package on
+/// http://www.larc.usp.br/~pbarreto/WhirlpoolPage.html
+///
+/// =============================================================================
+///
+/// @version 3.0 (2003.03.12)
+///
+/// =============================================================================
+///
+/// Differences from version 2.1:
+///
+/// - Suboptimal diffusion matrix replaced by cir(1, 1, 4, 1, 8, 5, 2, 9).
+///
+/// =============================================================================
+///
+/// Differences from version 2.0:
+///
+/// - Generation of ISO/IEC 10118-3 test vectors.
+/// - Bug fix: nonzero carry was ignored when tallying the data length
+///      (this bug apparently only manifested itself when feeding data
+///      in pieces rather than in a single chunk at once).
+/// - Support for MS Visual C++ 64-bit integer arithmetic.
+///
+/// Differences from version 1.0:
+///
+/// - Original S-box replaced by the tweaked, hardware-efficient version.
+///
+/// =============================================================================
+///
+/// THIS SOFTWARE IS PROVIDED BY THE AUTHORS ''AS IS'' AND ANY EXPRESS
+/// OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+/// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+/// ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHORS OR CONTRIBUTORS BE
+/// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+/// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+/// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+/// BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+/// WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+/// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+/// EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ///</summary>
 public class WhirlpoolManaged : System.Security.Cryptography.HashAlgorithm
 {
